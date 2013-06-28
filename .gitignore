@@ -1,3 +1,9 @@
+# byte-compiled files
 *.elc
 *.pyc
+
+# emacs specific ignores
 *~
+\#*\#
+.\#*
+auto-save-list
