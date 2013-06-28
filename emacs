@@ -13,6 +13,12 @@
   ;; If there is more than one, they won't work right.
  )
 
+;; set load paths
+(add-to-list 'load-path "~/.emacs.d/")
+
+;; byte-compile anything that has updated since last time
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+
 ;; never use tabs!
 (setq-default indent-tabs-mode nil)
 
@@ -28,7 +34,7 @@
 (load "~/.emacs.d/plsql.elc")
 
 ;; load theme
-(load "~/base16-emacs/base16-default-theme.el")
+(load "~/.emacs.d/base16-emacs/base16-default-theme.el")
 
 ;; tabulation on top with M-left and M-right navigation
 (tabbar-mode)
