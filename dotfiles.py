@@ -7,6 +7,7 @@
 import re
 import os
 import sys
+import errno
 import shutil
 
 # A list of regular expressions used to skip files while
@@ -30,8 +31,11 @@ def get_file_manifest(path):
 
 def ensure_dir(path):
     d = os.path.dirname(path)
-    if not os.path.exists(d):
+    try:
         os.makedirs(d)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
 
 
 def main(argv):
