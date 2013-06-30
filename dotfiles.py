@@ -12,7 +12,7 @@ import shutil
 
 # A list of regular expressions used to skip files while
 # generating the file manifest for copying
-IGNORE_REGEX=[r'README.md', r'dotfiles.py', r'^\.', r'~$']
+IGNORE_REGEX=[r'README\.md', r'dotfiles\.py', r'^\.', r'~$']
 
 home_dir = os.path.expanduser("~")
 
@@ -21,10 +21,10 @@ IGNORE_REGEX = re.compile("|".join(IGNORE_REGEX))
 def get_file_manifest(path):
     files = []
     for root, dirnames, filenames in os.walk(path, topdown=True):
-        for d in filter(lambda x: IGNORE_REGEX.match(x), dirnames):
+        for d in filter(lambda x: IGNORE_REGEX.search(x), dirnames):
             dirnames.remove(d)
         for f in filenames:
-            if not IGNORE_REGEX.match(f):
+            if not IGNORE_REGEX.search(f):
                 files.append((root, root.replace(path,""), f))
 
     return files
