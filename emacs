@@ -26,6 +26,10 @@
 (show-ws-toggle-show-trailing-whitespace)
 (show-ws-toggle-show-tabs)
 
+;; show line and column numbers
+(setq line-number-mode t)
+(setq column-number-mode t)
+
 ;; start server after initialization
 (add-hook 'after-init-hook 'server-start)
 
