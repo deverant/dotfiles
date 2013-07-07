@@ -13,11 +13,11 @@
   ;; If there is more than one, they won't work right.
  )
 
-;; set load paths
-(add-to-list 'load-path "~/.emacs.d/")
+;; set load path to libraries
+(add-to-list 'load-path "~/.emacs.d/lib/")
 
-;; byte-compile anything that has updated since last time
-(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+;; byte-compile anything in lib/ that has updated since last time
+(byte-recompile-directory (expand-file-name "~/.emacs.d/lib/") 0)
 
 ;; never use tabs!
 (setq-default indent-tabs-mode nil)
@@ -33,33 +33,6 @@
 ;; start server after initialization
 (add-hook 'after-init-hook 'server-start)
 
-;; by default use postgresql highlighting for sql mode and load plsql mode
-(add-hook 'sql-mode-hook 'sql-highlight-postgres-keywords)
-(load "~/.emacs.d/plsql.elc")
-
-;; use ruby-mode for Vagrantfile
-(add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
-
-;; load theme
-(load "~/.emacs.d/base16-emacs/base16-default-theme.el")
-
-;; tabulation on top with M-left and M-right navigation
-(tabbar-mode)
-
-(defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-   "Returns the name of the tab group names the current buffer belongs to.
- There are two groups: Emacs buffers (those whose name starts with “*”, plus
- dired buffers), and the rest.  This works at least with Emacs v24.2 using
- tabbar.el v1.7."
-   (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-               ((eq major-mode 'dired-mode) "emacs")
-               (t "user"))))
-(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-
-(global-set-key [M-left] 'tabbar-backward-tab)
-(global-set-key [M-right] 'tabbar-forward-tab)
-
-
 ;; single window mode and double window mode
 (defun sw ()
   (interactive)
@@ -72,6 +45,8 @@
   (set-frame-size (selected-frame) 163 65)
   (split-window (selected-window) 83 t))
 
+(dolist (file (directory-files "~/.emacs.d/init.d" t ".elc?$"))
+  (load (file-name-sans-extension file)))
 
 ;; Clear echo area
 (princ "" t)
