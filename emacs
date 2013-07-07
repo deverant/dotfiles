@@ -37,6 +37,9 @@
 (add-hook 'sql-mode-hook 'sql-highlight-postgres-keywords)
 (load "~/.emacs.d/plsql.elc")
 
+;; use ruby-mode for Vagrantfile
+(add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
+
 ;; load theme
 (load "~/.emacs.d/base16-emacs/base16-default-theme.el")
 
