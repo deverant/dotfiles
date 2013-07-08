@@ -21,6 +21,7 @@ DOTFILES_MANIFEST = ".dotfiles.manifest"
 
 IGNORE_REGEX = re.compile("|".join(IGNORE_REGEX))
 
+
 def get_file_manifest(path):
     """Generates a file manifest by going through all the files
     found under a path that does not match the given IGNORE_REGEX
@@ -33,23 +34,23 @@ def get_file_manifest(path):
             if not IGNORE_REGEX.search(f):
                 d = root.replace(path, "")
                 target_file = os.path.join(d[1:], f) if d else f
-                files.append((os.path.join(root,f), "." + target_file))
+                files.append((os.path.join(root, f), "." + target_file))
 
     return files
 
 
 def write_manifest(filename, manifest):
     with open(filename, 'w') as f:
-        f.write("# .dotfiles.manifest.v1 %s\n"%datetime.datetime.now())
+        f.write("# .dotfiles.manifest.v1 %s\n" % datetime.datetime.now())
         f.write("# this file is automatically created -- do not edit\n\n")
         for m in manifest:
-            f.write(m+"\n")
+            f.write(m + "\n")
 
 
 def read_manifest(filename):
     manifest = set()
     if not os.path.isfile(filename):
-        return manifest # no filename found so return empty set
+        return manifest  # no filename found so return empty set
     with open(filename, 'r') as f:
         for line in f:
             line = line.strip()
@@ -71,6 +72,7 @@ def ensure_dir(path):
         if exception.errno != errno.EEXIST:
             raise
 
+
 def is_same_file(file_a, file_b):
     """Tries to determine if two files are the same without actually
     going through what they contain. Files are considered the same
@@ -88,7 +90,7 @@ def parse_args(arguments):
     """Parse any arguments given and check validity if needed"""
     parser = optparse.OptionParser()
     parser.add_option("-n", "--dry-run", action="store_true", dest="dryrun",
-                      help="Simulate a dotfiles run but make no changes to the filesystem.")
+                      help="Do not make any changes to the filesystem.")
 
     (options, args) = parser.parse_args(arguments)
 
@@ -115,8 +117,8 @@ def main(argv):
 
         print "copy:", src, "-->", target
         if not options.dryrun:
-             ensure_dir(target)
-             shutil.copy2(src, target)
+            ensure_dir(target)
+            shutil.copy2(src, target)
 
     # remove old files from last manifest
     for filename in old_files:
@@ -126,12 +128,13 @@ def main(argv):
 
     if not options.dryrun:
         write_manifest(DOTFILES_MANIFEST,
-                       (os.path.join(HOME_DIR,x[1]) for x in files))
+                       (os.path.join(HOME_DIR, x[1]) for x in files))
 
-    print "dotfiles.py%s: %d files updated (%d already up-to-date), removed %d old files" % \
+    print "dotfiles.py%s: %d files updated (%d already up-to-date)" \
+        ", removed %d old files" % \
         (' (dryrun)' if options.dryrun else '',
-         len(files)-skipped, skipped, len(old_files))
+         (len(files) - skipped), skipped, len(old_files))
 
 
 if __name__ == "__main__":
-    main(sys.argv) # run from command-line
+    main(sys.argv)  # run from command-line
