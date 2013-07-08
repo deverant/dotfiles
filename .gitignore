@@ -7,3 +7,7 @@
 \#*\#
 .\#*
 auto-save-list
+
+
+# .dotfiles specific
+.dotfiles.manifest
