@@ -40,7 +40,8 @@ def get_file_manifest(path):
 
 def write_manifest(filename, manifest):
     with open(filename, 'w') as f:
-        f.write("# .dotfiles.manifest %s\n\n"%datetime.datetime.now())
+        f.write("# .dotfiles.manifest.v1 %s\n"%datetime.datetime.now())
+        f.write("# this file is automatically created -- do not edit\n\n")
         for m in manifest:
             f.write(m+"\n")
 
@@ -70,6 +71,18 @@ def ensure_dir(path):
         if exception.errno != errno.EEXIST:
             raise
 
+def is_same_file(file_a, file_b):
+    """Tries to determine if two files are the same without actually
+    going through what they contain. Files are considered the same
+    if these attributes are the same for both files:
+
+    * os.stat().st_mtime (integer precision only)
+    * os.stat().st_size
+    """
+    a = os.stat(file_a)
+    b = os.stat(file_b)
+    return (int(a.st_mtime) == int(b.st_mtime) and a.st_size == b.st_size)
+
 
 def parse_args(arguments):
     """Parse any arguments given and check validity if needed"""
@@ -90,9 +103,15 @@ def main(argv):
     files = get_file_manifest(os.getcwd())
 
     # copy new files in place
+    skipped = 0
     for (src, target) in files:
         target = os.path.join(HOME_DIR, target)
         old_files.discard(target)
+
+        if is_same_file(src, target):
+            # skip if the source and target seem to be the same
+            skipped += 1
+            continue
 
         print "copy:", src, "-->", target
         if not options.dryrun:
@@ -108,6 +127,10 @@ def main(argv):
     if not options.dryrun:
         write_manifest(DOTFILES_MANIFEST,
                        (os.path.join(HOME_DIR,x[1]) for x in files))
+
+    print "dotfiles.py%s: %d files updated (%d already up-to-date), removed %d old files" % \
+        (' (dryrun)' if options.dryrun else '',
+         len(files)-skipped, skipped, len(old_files))
 
 
 if __name__ == "__main__":
