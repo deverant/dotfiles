@@ -81,9 +81,14 @@ def is_same_file(file_a, file_b):
     * os.stat().st_mtime (integer precision only)
     * os.stat().st_size
     """
-    a = os.stat(file_a)
-    b = os.stat(file_b)
-    return (int(a.st_mtime) == int(b.st_mtime) and a.st_size == b.st_size)
+    try:
+        a = os.stat(file_a)
+        b = os.stat(file_b)
+        return (int(a.st_mtime) == int(b.st_mtime) and a.st_size == b.st_size)
+    except OSError as exception:
+        if exception.errno != errno.ENOENT:
+            raise
+        return False
 
 
 def parse_args(arguments):
