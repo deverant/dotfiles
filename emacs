@@ -13,6 +13,9 @@
   ;; If there is more than one, they won't work right.
  )
 
+;; stack trace on errors
+(setq debug-on-error t)
+
 ;; set load path to libraries
 (add-to-list 'load-path "~/.emacs.d/lib/")
 

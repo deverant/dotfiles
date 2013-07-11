@@ -14,7 +14,7 @@ import datetime
 
 # A list of regular expressions used to skip files while
 # generating the file manifest for copying
-IGNORE_REGEX = [r'README\.md', r'dotfiles\.py', r'^\.', r'~$']
+IGNORE_REGEX = [r'README\.md', r'dotfiles\.py', r'^\.', r'~$', r'#.+#$']
 
 HOME_DIR = os.path.expanduser("~")
 DOTFILES_MANIFEST = ".dotfiles.manifest"
