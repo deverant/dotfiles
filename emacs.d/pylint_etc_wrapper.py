@@ -295,7 +295,7 @@ def main():
         help="comma separated list of error codes to ignore")
     parser.add_option(
         "-p", "--checker_progs",
-        default="pylint,pyflakes,pep8",
+        default="pyflakes,pep8",
         help=("comma separated list of the checker"
               " programs to run. default=pylint,pyflakes"))
     parser.add_option(
