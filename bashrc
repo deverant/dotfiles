@@ -104,5 +104,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# enable autojump if it exists in the system
+if [[ -s /usr/share/autojump/autojump.sh ]]; then
+   . /usr/share/autojump/autojump.sh
+fi
+
 # exports
 export LESS="FiX"
