@@ -111,3 +111,6 @@ fi
 
 # exports
 export LESS="FiX"
+
+# set user specific binary dir
+export PATH=$PATH:$HOME/.bin
