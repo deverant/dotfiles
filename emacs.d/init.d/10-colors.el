@@ -1,4 +1,4 @@
 ;; install solarized theme
-(el-get-install 'color-theme-almost-monokai)
+(el-get-install 'color-theme-railscasts)
 
-(color-theme-almost-monokai)
+(color-theme-railscasts)
