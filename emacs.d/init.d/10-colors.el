@@ -1,4 +1,4 @@
 ;; install solarized theme
-(el-get-install 'color-theme-solarized)
+(el-get-install 'color-theme-almost-monokai)
 
-(color-theme-solarized-dark)
+(color-theme-almost-monokai)
