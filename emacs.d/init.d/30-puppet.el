@@ -1,8 +1,2 @@
-;;
-;; Setup puppet-mode for autoloading
-;;
-;; https://github.com/puppetlabs/puppet-syntax-emacs/
-;;
-(autoload 'puppet-mode "puppet-mode" "Major mode for editing puppet manifests")
-
-(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
+;; puppet!
+(el-get-install 'puppet-mode)

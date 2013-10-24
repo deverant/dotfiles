@@ -1,2 +1,2 @@
 ;; load php-mode libs
-(require 'php-mode)
+(el-get-install 'php-mode-improved)

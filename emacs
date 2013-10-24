@@ -19,9 +19,6 @@
 ;; set load path to libraries
 (add-to-list 'load-path "~/.emacs.d/lib/")
 
-;; byte-compile anything in lib/ that has updated since last time
-(byte-recompile-directory (expand-file-name "~/.emacs.d/lib/") 0)
-
 ;; never use tabs!
 (setq-default indent-tabs-mode nil)
 
@@ -35,6 +32,23 @@
 
 ;; start server after initialization
 (add-hook 'after-init-hook 'server-start)
+
+;; enable el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (let (el-get-master-branch)
+      (goto-char (point-max))
+      (eval-print-last-sexp))))
+(el-get 'sync)
+
+;; we need cl-lib before we can byte-compile elp in lib/
+(el-get-install 'cl-lib)
+
+;; byte-compile anything in lib/ that has updated since last time
+(byte-recompile-directory (expand-file-name "~/.emacs.d/lib/") 0)
 
 ;; single window mode and double window mode
 (defun sw ()
