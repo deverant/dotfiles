@@ -119,7 +119,7 @@ if [[ -s /usr/share/autojump/autojump.sh ]]; then
 fi
 
 # exports
-export LESS="FiX"
+export LESS="FiXR"
 
 # set user specific binary dir
 export PATH=$PATH:$HOME/.bin
