@@ -33,8 +33,19 @@
 ;; start server after initialization
 (add-hook 'after-init-hook 'server-start)
 
+;; local sources
+(setq el-get-sources
+  '((:name flycheck  ; flycheck fixed not to use info
+     :type github
+     :pkgname "lunaryorn/flycheck"
+     :description "On-the-fly syntax checking extension"
+     :info nil
+     :depends (s dash cl-lib f pkg-info))))
+
 ;; enable el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(setq el-get-user-package-directory "~/.emacs.d/el-get-init")
+
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -42,10 +53,15 @@
     (let (el-get-master-branch)
       (goto-char (point-max))
       (eval-print-last-sexp))))
-(el-get 'sync)
 
-;; we need cl-lib before we can byte-compile elp in lib/
-(el-get-install 'cl-lib)
+(setq my-packages
+  (append
+    '(cl-lib color-theme-railscasts git-commit-mode projectile
+      jedi tabbar jinja2-mode flx flycheck puppet-mode)
+    (mapcar 'el-get-source-name el-get-sources)))
+
+(el-get-cleanup my-packages)
+(el-get 'sync my-packages)
 
 ;; byte-compile anything in lib/ that has updated since last time
 (byte-recompile-directory (expand-file-name "~/.emacs.d/lib/") 0)
