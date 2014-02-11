@@ -33,7 +33,7 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # Make sure we set TERM to more colors if using gnome or xfce4 terminal
-if [ "$COLORTERM" == "gnome-terminal" ] || [ "$COLORTERM" == "xfce4-terminal" ]
+if [ "$COLORTERM" == "gnome-terminal" ] || [ "$COLORTERM" == "Terminal" ]
 then
     TERM=xterm-256color
     elif [ "$COLORTERM" == "rxvt-xpm" ]
