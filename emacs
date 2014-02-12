@@ -1,3 +1,5 @@
+; -*- coding: utf-8; mode: lisp -*-
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -35,12 +37,12 @@
 
 ;; local sources
 (setq el-get-sources
-  '((:name flycheck  ; flycheck fixed not to use info
-     :type github
-     :pkgname "lunaryorn/flycheck"
-     :description "On-the-fly syntax checking extension"
-     :info nil
-     :depends (s dash cl-lib f pkg-info))))
+      '((:name flycheck  ; flycheck fixed not to use info
+               :type github
+               :pkgname "lunaryorn/flycheck"
+               :description "On-the-fly syntax checking extension"
+               :info nil
+               :depends (s dash cl-lib f pkg-info))))
 
 ;; enable el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -55,10 +57,10 @@
       (eval-print-last-sexp))))
 
 (setq my-packages
-  (append
-    '(cl-lib color-theme-railscasts git-commit-mode projectile
-      jedi tabbar jinja2-mode flx flycheck puppet-mode)
-    (mapcar 'el-get-source-name el-get-sources)))
+      (append
+       '(cl-lib color-theme-railscasts git-commit-mode projectile
+                jedi tabbar jinja2-mode flx flycheck puppet-mode clojure-mode)
+       (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
