@@ -1,2 +1,4 @@
 ;; install railscasts theme
-(color-theme-railscasts)
+
+(if window-system
+    (color-theme-railscasts))
