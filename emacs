@@ -77,8 +77,8 @@
 (defun dw ()
   (interactive)
   (delete-other-windows)
-  (set-frame-size (selected-frame) 163 65)
-  (split-window (selected-window) 83 t))
+  (set-frame-size (selected-frame) 167 65)
+  (split-window (selected-window) 85 t))
 
 (dolist (file (directory-files "~/.emacs.d/init.d" t ".elc?$"))
   (load (file-name-sans-extension file)))
