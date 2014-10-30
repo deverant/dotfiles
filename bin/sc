@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Show only the IPv4 address or the start of  the hostname.
+HOST=`grep -o '^\([0-9]\+\.\)\{3\}[0-9]\+\|^[^.]\+' <<<"${1}"`
+
+# Start tmux window
+tmux new-window -n ${HOST} "ssh -A ${1}"
