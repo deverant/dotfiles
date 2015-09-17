@@ -18,9 +18,6 @@
 ;; stack trace on errors
 (setq debug-on-error t)
 
-;; set load path to libraries
-(add-to-list 'load-path "~/.emacs.d/lib/")
-
 ;; never use tabs!
 (setq-default indent-tabs-mode nil)
 
@@ -35,38 +32,74 @@
 ;; start server after initialization
 (add-hook 'after-init-hook 'server-start)
 
-;; local sources
-(setq el-get-sources
-      '((:name flycheck  ; flycheck fixed not to use info
-               :type github
-               :pkgname "lunaryorn/flycheck"
-               :description "On-the-fly syntax checking extension"
-               :info nil
-               :depends (s dash cl-lib f pkg-info))))
+;; package management
+(require 'cl-lib)
+(require 'package)
+(package-initialize)
 
-;; enable el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(setq el-get-user-package-directory "~/.emacs.d/el-get-init")
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (let (el-get-master-branch)
-      (goto-char (point-max))
-      (eval-print-last-sexp))))
+(defvar dev-packages
+  '(flycheck
+    flx
+    flx-ido
+    ido
+    jedi
+    projectile
+    python)
+  "A list of packages to ensure are installed at launch.")
 
-(setq my-packages
-      (append
-       '(cl-lib color-theme-railscasts git-commit-mode projectile
-                jedi tabbar jinja2-mode flx flycheck puppet-mode clojure-mode)
-       (mapcar 'el-get-source-name el-get-sources)))
+(defun dev-packages-installed-p ()
+  (cl-loop for p in dev-packages
+        if (not (package-installed-p p)) return nil
+        finally (return t)))
 
-(el-get-cleanup my-packages)
-(el-get 'sync my-packages)
+(unless (dev-packages-installed-p)
+  ;; check for new packages (package versions)
+  (message "%s" "Emacs is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " done.")
+  ;; install the missing packages
+  (dolist (p dev-packages)
+    (when (not (package-installed-p p))
+      (package-install p))))
 
-;; byte-compile anything in lib/ that has updated since last time
-(byte-recompile-directory (expand-file-name "~/.emacs.d/lib/") 0)
+(provide 'dev-packages)
+
+;; theme
+(load-theme 'tango-dark t)
+
+;; Set the font we should use
+(set-default-font "Inconsolata-10")
+
+;; enable ido-mode
+(require 'ido)
+(ido-mode t)
+
+;; Display ido results vertically, rather than horizontally
+(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+
+(defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
+(defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+(add-hook 'ido-setup-hook 'ido-define-keys)
+
+;; flx-ido
+(require 'flx-ido)
+(flx-ido-mode 1)
+
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+;; always use flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; always use projectile
+(projectile-global-mode)
 
 ;; single window mode and double window mode
 (defun sw ()
@@ -79,9 +112,6 @@
   (delete-other-windows)
   (set-frame-size (selected-frame) 167 65)
   (split-window (selected-window) 85 t))
-
-(dolist (file (directory-files "~/.emacs.d/init.d" t ".elc?$"))
-  (load (file-name-sans-extension file)))
 
 ;; Clear echo area
 (princ "" t)
