@@ -20,3 +20,12 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # most common git rebase for almost daily use..
 alias git-stash-rebase='git stash; git rebase -i HEAD~2; git stash pop'
+
+# bash history grep from all the files
+hist() {
+    find ~/.history -type f|sort|xargs awk '{ print FILENAME ":" $0 }'
+    history
+}
+hgrep() {
+    hist | grep "$@"
+}
