@@ -122,3 +122,11 @@ export PATH=$PATH:$HOME/.bin
 
 # use emacs for git
 export GIT_EDITOR=fast_emacs
+
+# use docker-machine env if available
+DOCKERMACHINE=$(which docker-machine)
+if [ ! -z "$DOCKERMACHINE" ];
+then
+    DOCKERMACHINE_NAME=$($DOCKERMACHINE ls -q)
+    eval "$("$DOCKERMACHINE" env "$DOCKERMACHINE_NAME")"
+fi
