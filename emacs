@@ -46,6 +46,7 @@
     flx-ido
     ido
     jedi
+    php-mode
     projectile
     python)
   "A list of packages to ensure are installed at launch.")
@@ -76,6 +77,9 @@
 ;; enable ido-mode
 (require 'ido)
 (ido-mode t)
+
+;; enable php-mode
+(require 'php-mode)
 
 ;; Display ido results vertically, rather than horizontally
 (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
