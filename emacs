@@ -38,14 +38,20 @@
 (package-initialize)
 
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar dev-packages
-  '(flycheck
+  '(company
+    anaconda-mode
+    company-anaconda
+    flycheck
     flx
     flx-ido
     ido
     jedi
+    jedi-core
     php-mode
     projectile
     python)
@@ -100,10 +106,16 @@
 (setq ido-use-faces nil)
 
 ;; always use flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-flycheck-mode)
+
+;; always use company mode
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; always use projectile
 (projectile-global-mode)
+
+;; use anaconda-mode with python
+(add-hook 'python-mode-hook 'anaconda-mode)
 
 ;; single window mode and double window mode
 (defun sw ()
