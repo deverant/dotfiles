@@ -27,5 +27,5 @@ hist() {
     history
 }
 hgrep() {
-    hist | grep "$@"
+    hist | grep -a "$@"
 }
