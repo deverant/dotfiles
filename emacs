@@ -52,6 +52,7 @@
     ido
     jedi
     jedi-core
+    json-mode
     php-mode
     projectile
     python)
@@ -86,6 +87,12 @@
 
 ;; enable php-mode
 (require 'php-mode)
+
+;; json mode width
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
 
 ;; Display ido results vertically, rather than horizontally
 (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
