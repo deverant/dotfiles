@@ -54,6 +54,7 @@
     jedi-core
     json-mode
     php-mode
+    puppet-mode
     projectile
     python)
   "A list of packages to ensure are installed at launch.")
