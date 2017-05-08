@@ -29,3 +29,18 @@ hist() {
 hgrep() {
     hist | grep -a "$@"
 }
+
+
+# open emacs right here right now
+e() {
+    emacsclient -c -nw $@
+}
+
+# open emacs in tmux split window
+em() {
+    tmux split-window -h 'emacsclient -c -nw '$@''
+}
+
+da() {
+    ssh lon2-devadmin-a1.lon2.spotify.net "$@"
+}
