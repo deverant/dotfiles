@@ -125,6 +125,31 @@
 ;; use anaconda-mode with python
 (add-hook 'python-mode-hook 'anaconda-mode)
 
+;; try harder to find include files in flymake
+(defvar mh-erlang-flymake-code-path-dirs (list "../../*/ebin")
+  "List of directories to add to code path for Erlang Flymake.
+Wildcards are expanded.")
+
+(defun mh-simple-get-deps-code-path-dirs ()
+  ;; Why complicate things?
+  (and (buffer-file-name)
+       (let ((default-directory (file-name-directory (buffer-file-name))))
+         (apply 'append
+                (mapcar
+                 (lambda (wildcard)
+                   ;; If the wild card expands to a directory you
+                   ;; don't have read permission for, this would throw
+                   ;; an error.
+                   (ignore-errors
+                     (file-expand-wildcards wildcard)))
+                 mh-erlang-flymake-code-path-dirs)))))
+
+(defun mh-simple-get-deps-include-dirs ()
+  (list "../include" "../src" ".."))
+
+(setq erlang-flymake-get-code-path-dirs-function 'mh-simple-get-deps-code-path-dirs
+      erlang-flymake-get-include-dirs-function 'mh-simple-get-deps-include-dirs)
+
 ;; single window mode and double window mode
 (defun sw ()
   (interactive)
