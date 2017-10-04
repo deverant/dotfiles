@@ -118,7 +118,7 @@ fi
 export LESS="FiXR"
 
 # set user specific binary dir
-export PATH=$PATH:$HOME/.bin
+export PATH=$PATH:$HOME/.cache/rebar3/bin:$HOME/.bin
 
 # use emacs for git
 export GIT_EDITOR=fast_emacs
