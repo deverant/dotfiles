@@ -21,10 +21,6 @@
 ;; never use tabs!
 (setq-default indent-tabs-mode nil)
 
-;; but show me if tabs or whitespace exists
-(show-ws-toggle-show-trailing-whitespace)
-(show-ws-toggle-show-tabs)
-
 ;; show line and column numbers
 (setq line-number-mode t)
 (setq column-number-mode t)
@@ -161,6 +157,9 @@ Wildcards are expanded.")
   (delete-other-windows)
   (set-frame-size (selected-frame) 167 65)
   (split-window (selected-window) 85 t))
+
+;; Clear whitespace on save
+(add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;; Clear echo area
 (princ "" t)
