@@ -18,9 +18,6 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# most common git rebase for almost daily use..
-alias git-stash-rebase='git stash; git rebase -i HEAD~2; git stash pop'
-
 # bash history grep from all the files
 hist() {
     find ~/.history -type f|sort|xargs awk '{ print FILENAME ":" $0 }'
@@ -39,8 +36,4 @@ e() {
 # open emacs in tmux split window
 em() {
     tmux split-window -h 'emacsclient -c -nw '$@''
-}
-
-da() {
-    ssh lon2-devadmin-a1.lon2.spotify.net "$@"
 }
