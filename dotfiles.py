@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # A crude implementation to copy files to their correct
@@ -14,7 +14,7 @@ import datetime
 
 # A list of regular expressions used to skip files while
 # generating the file manifest for copying
-IGNORE_REGEX = [r'README\.md', r'dotfiles\.py', r'^\.', r'~$', r'#.+#$']
+IGNORE_REGEX = [r"README\.md", r"dotfiles\.py", r"^\.", r"~$", r"#.+#$"]
 
 HOME_DIR = os.path.expanduser("~")
 DOTFILES_MANIFEST = ".dotfiles.manifest"
@@ -40,7 +40,7 @@ def get_file_manifest(path):
 
 
 def write_manifest(filename, manifest):
-    with open(filename, 'w') as f:
+    with open(filename, "w") as f:
         f.write("# .dotfiles.manifest.v1 %s\n" % datetime.datetime.now())
         f.write("# this file is automatically created -- do not edit\n\n")
         for m in manifest:
@@ -51,7 +51,7 @@ def read_manifest(filename):
     manifest = set()
     if not os.path.isfile(filename):
         return manifest  # no filename found so return empty set
-    with open(filename, 'r') as f:
+    with open(filename, "r") as f:
         for line in f:
             line = line.strip()
             if not line.startswith("#") and len(line) > 0:
@@ -84,7 +84,7 @@ def is_same_file(file_a, file_b):
     try:
         a = os.stat(file_a)
         b = os.stat(file_b)
-        return (int(a.st_mtime) == int(b.st_mtime) and a.st_size == b.st_size)
+        return int(a.st_mtime) == int(b.st_mtime) and a.st_size == b.st_size
     except OSError as exception:
         if exception.errno != errno.ENOENT:
             raise
@@ -94,8 +94,13 @@ def is_same_file(file_a, file_b):
 def parse_args(arguments):
     """Parse any arguments given and check validity if needed"""
     parser = optparse.OptionParser()
-    parser.add_option("-n", "--dry-run", action="store_true", dest="dryrun",
-                      help="Do not make any changes to the filesystem.")
+    parser.add_option(
+        "-n",
+        "--dry-run",
+        action="store_true",
+        dest="dryrun",
+        help="Do not make any changes to the filesystem.",
+    )
 
     (options, args) = parser.parse_args(arguments)
 
@@ -120,25 +125,30 @@ def main(argv):
             skipped += 1
             continue
 
-        print "copy:", src, "-->", target
+        print("copy:", src, "-->", target)
         if not options.dryrun:
             ensure_dir(target)
             shutil.copy2(src, target)
 
     # remove old files from last manifest
     for filename in old_files:
-        print "remove:", filename
+        print("remove:", filename)
         if not options.dryrun and os.path.isfile(filename):
             os.unlink(filename)
 
     if not options.dryrun:
-        write_manifest(DOTFILES_MANIFEST,
-                       (os.path.join(HOME_DIR, x[1]) for x in files))
+        write_manifest(DOTFILES_MANIFEST, (os.path.join(HOME_DIR, x[1]) for x in files))
 
-    print "dotfiles.py%s: %d files updated (%d already up-to-date)" \
-        ", removed %d old files" % \
-        (' (dryrun)' if options.dryrun else '',
-         (len(files) - skipped), skipped, len(old_files))
+    print(
+        "dotfiles.py%s: %d files updated (%d already up-to-date)"
+        ", removed %d old files"
+        % (
+            " (dryrun)" if options.dryrun else "",
+            (len(files) - skipped),
+            skipped,
+            len(old_files),
+        )
+    )
 
 
 if __name__ == "__main__":
