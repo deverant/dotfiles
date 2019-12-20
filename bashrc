@@ -123,3 +123,13 @@ export PATH=$PATH:$HOME/.cache/rebar3/bin:$HOME/.bin
 
 # use emacs for git
 export GIT_EDITOR=fast_emacs
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Run keychain if it is found
+[ -x /usr/bin/keychain ] && /usr/bin/keychain --quiet --nogui $HOME/.ssh/id_rsa
+[ -f $HOME/.keychain/$HOSTNAME-sh ] && . $HOME/.keychain/$HOSTNAME-sh
