@@ -28,6 +28,9 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
+;; only needed pre-26.3
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; start server after initialization
 (add-hook 'after-init-hook 'server-start)
 
@@ -163,6 +166,18 @@ Wildcards are expanded.")
 
 ;; Clear whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
+
+;; Add org-mode keybindings
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+
+;; org-mode default capture location
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")))
 
 ;; Clear echo area
 (princ "" t)
