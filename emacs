@@ -31,9 +31,6 @@
 ;; only needed pre-26.3
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-;; start server after initialization
-(add-hook 'after-init-hook 'server-start)
-
 ;; package management
 (require 'cl-lib)
 (require 'package)
