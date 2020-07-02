@@ -133,3 +133,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # Run keychain if it is found
 [ -x /usr/bin/keychain ] && /usr/bin/keychain --quiet --nogui $HOME/.ssh/id_rsa
 [ -f $HOME/.keychain/$HOSTNAME-sh ] && . $HOME/.keychain/$HOSTNAME-sh
+
+# Run emacs daemon if needed
+pgrep -f "emacs --daemon" >/dev/null
+[ $? != 0 ] && emacs --daemon
