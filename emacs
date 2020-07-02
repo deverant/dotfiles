@@ -9,8 +9,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (rust-mode puppet-mode projectile php-mode json-mode jedi flycheck flx-ido company-anaconda)))
- '(tool-bar-mode nil))
+    (rust-mode puppet-mode projectile json-mode jedi flycheck flx-ido company-anaconda))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -52,7 +51,6 @@
     jedi
     jedi-core
     json-mode
-    php-mode
     puppet-mode
     projectile
     python)
@@ -84,9 +82,6 @@
 ;; enable ido-mode
 (require 'ido)
 (ido-mode t)
-
-;; enable php-mode
-(require 'php-mode)
 
 ;; json mode width
 (add-hook 'json-mode-hook
