@@ -10,7 +10,7 @@
  '(org-agenda-files (quote ("~/Dropbox/org")))
  '(package-selected-packages
    (quote
-    (rust-mode puppet-mode projectile json-mode jedi flycheck flx-ido company-anaconda))))
+    (ido-completing-read+ rust-mode puppet-mode projectile json-mode jedi flycheck flx-ido company-anaconda))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -49,6 +49,7 @@
     flx
     flx-ido
     ido
+    ido-completing-read+
     jedi
     jedi-core
     json-mode
@@ -83,6 +84,9 @@
 ;; enable ido-mode
 (require 'ido)
 (ido-mode t)
+(ido-everywhere t)
+(require 'ido-completing-read+)
+(ido-ubiquitous-mode t)
 
 ;; json mode width
 (add-hook 'json-mode-hook
@@ -176,9 +180,8 @@ Wildcards are expanded.")
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
 
-
 ; Use full outline paths for refile targets - we file directly with IDO
-(setq org-refile-use-outline-path t)
+(setq org-refile-use-outline-path 'file)
 
 ; Targets complete directly with IDO
 (setq org-outline-path-complete-in-steps nil)
@@ -187,7 +190,6 @@ Wildcards are expanded.")
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 
 ; Use IDO for both buffer and file completion and ido-everywhere to t
-(setq org-completion-use-ido t)
 (setq ido-everywhere t)
 (setq ido-max-directory-size 100000)
 (ido-mode (quote both))
