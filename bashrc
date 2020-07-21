@@ -118,8 +118,14 @@ fi
 # exports
 export LESS="FiXR"
 
-# set user specific binary dir
+# Add things to PATH
 export PATH=$PATH:$HOME/.cache/rebar3/bin:$HOME/.bin
+
+# setup jenv
+if [ -x $HOME/.jenv/bin/jenv ]; then
+    export PATH=$HOME/.jenv/bin:$PATH
+    eval "$(jenv init -)"
+fi
 
 # use emacs for git
 export GIT_EDITOR=fast_emacs
