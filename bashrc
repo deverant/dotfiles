@@ -119,7 +119,7 @@ fi
 export LESS="FiXR"
 
 # Add things to PATH
-export PATH=$PATH:$HOME/.cache/rebar3/bin:$HOME/.bin:$HOME/go/bin
+export PATH=$PATH:$HOME/.cache/rebar3/bin:$HOME/.bin:$HOME/.cargo/bin:$HOME/go/bin
 
 # setup jenv
 if [ -x $HOME/.jenv/bin/jenv ]; then
