@@ -119,7 +119,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; always use projectile
-(projectile-global-mode)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; use anaconda-mode with python
 (add-hook 'python-mode-hook 'anaconda-mode)
