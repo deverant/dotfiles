@@ -211,6 +211,9 @@ Wildcards are expanded.")
 ;; Overwrite the current window with the agenda
 (setq org-agenda-window-setup 'current-window)
 
+;; Enforce todo dependencies
+(setq org-enforce-todo-dependencies t)
+
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
 
