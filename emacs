@@ -238,5 +238,8 @@ Wildcards are expanded.")
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
 
+;; Use xdg-open to open URLs
+(setq browse-url-browser-function 'browse-url-xdg-open)
+
 ;; Clear echo area
 (princ "" t)
