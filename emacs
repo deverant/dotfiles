@@ -214,6 +214,10 @@ Wildcards are expanded.")
 ;; Enforce todo dependencies
 (setq org-enforce-todo-dependencies t)
 
+;; Hide scheduled items from global todo list
+(setq org-agenda-todo-ignore-scheduled t)
+(setq org-agenda-todo-ignore-deadlines t)
+
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
 
