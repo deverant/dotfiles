@@ -28,9 +28,6 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
-;; only needed pre-26.3
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
 ;; package management
 (require 'cl-lib)
 (require 'package)
