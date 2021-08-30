@@ -79,7 +79,7 @@
 (load-theme 'tango-dark t)
 
 ;; Set the font we should use
-(set-default-font "Inconsolata-10")
+(set-frame-font "Inconsolata-10")
 
 ;; enable ido-mode
 (require 'ido)
