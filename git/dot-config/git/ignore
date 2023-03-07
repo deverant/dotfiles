@@ -1,0 +1,15 @@
+# asdf
+.tool-versions
+
+# Node
+npm-debug.log
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Python
+.venv
+__pycache__
