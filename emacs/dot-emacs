@@ -25,7 +25,6 @@
 (setq-default indent-tabs-mode nil) ; never use tabs!
 (delete-selection-mode)
 
-
 (setq gc-cons-threshold 100000000 ; run GC every 100 megs
       read-process-output-max (* 1024 1024) ; 1mb
       debug-on-error t ; stack trace on errors
@@ -52,7 +51,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar my-packages
-  '(company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright)
+  '(company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
