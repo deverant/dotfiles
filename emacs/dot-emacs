@@ -78,6 +78,7 @@
 (add-hook 'python-mode-hook (lambda ()
                               (require 'lsp-pyright)
                               (lsp-deferred)))
+(add-hook 'c-mode-hook 'lsp-deferred)
 
 (setq lsp-file-watch-threshold 1000)
 (with-eval-after-load 'lsp-mode
