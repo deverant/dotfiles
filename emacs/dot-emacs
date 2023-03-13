@@ -37,6 +37,7 @@
       version-control t ; use versioned backups
       line-number-mode t ; show line numbers
       column-number-mode t ; show column numbers
+      visible-bell t
       )
 
 (when (string= system-type "darwin")
