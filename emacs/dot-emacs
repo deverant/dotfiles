@@ -80,6 +80,15 @@
                               (lsp-deferred)))
 (add-hook 'c-mode-hook 'lsp-deferred)
 
+(setq lsp-clients-clangd-args
+          '("-j=2"
+            "--background-index"
+            "--clang-tidy"
+            "--completion-style=bundled"
+            "--pch-storage=memory"
+            "--header-insertion=iwyu"
+            "--header-insertion-decorators=1"))
+
 (setq lsp-file-watch-threshold 1000)
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.venv\\'"))
