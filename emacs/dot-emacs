@@ -7,7 +7,8 @@
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
- '(package-selected-packages '(company projectile flycheck flx-ido editorconfig)))
+ '(package-selected-packages
+   '(multiple-cursors company projectile flycheck flx-ido editorconfig)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,7 +26,7 @@
 (setq-default indent-tabs-mode nil) ; never use tabs!
 (delete-selection-mode)
 
-(setq gc-cons-threshold 100000000 ; run GC every 100 megs
+(setq gc-cons-threshold (* 100 1024 1024) ; run GC every 100 megs
       read-process-output-max (* 1024 1024) ; 1mb
       debug-on-error t ; stack trace on errors
       backup-by-copying t ; don't clobber symlinks
@@ -52,7 +53,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar my-packages
-  '(company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode)
+  '(company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
@@ -70,7 +71,7 @@
 
 ;; theme
 (load-theme 'tango-dark t)
-(set-frame-font "FiraCode Nerd Font Mono-10")
+(set-frame-font "FiraCode Nerd Font Mono-12")
 
 ;; lsp-mode
 (setq lsp-keymap-prefix "C-c l")
@@ -79,6 +80,7 @@
                               (require 'lsp-pyright)
                               (lsp-deferred)))
 (add-hook 'c-mode-hook 'lsp-deferred)
+(add-hook 'c++-mode-hook 'lsp-deferred)
 
 (setq lsp-clients-clangd-args
           '("-j=2"
@@ -89,9 +91,18 @@
             "--header-insertion=iwyu"
             "--header-insertion-decorators=1"))
 
-(setq lsp-file-watch-threshold 1000)
+(setq lsp-file-watch-threshold 1000
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      lsp-idle-delay 0.1)
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.venv\\'"))
+
+;; multiple-cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; editorconfig
 (require 'editorconfig)
