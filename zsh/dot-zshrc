@@ -1,5 +1,12 @@
 # -*- mode: shell-script -*-
 
+# enable color support of ls
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls="ls --color=auto"
+fi
+
+
 ZSHDDIR="${HOME}/.config/zsh.d"
 
 for zshd in ${HOME}/.config/zsh.d/**/*.(sh|zsh)(rN); do
