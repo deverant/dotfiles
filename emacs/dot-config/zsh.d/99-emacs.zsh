@@ -4,10 +4,10 @@ then
     emacs --daemon
 fi
 
-export EDITOR="emacsclient -c -nw"
+export EDITOR="emacsclient -nw"
 
 e() {
-    emacsclient -c -nw "$@"
+    emacsclient -nw "$@"
 }
 
 ew() {
