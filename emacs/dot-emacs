@@ -71,8 +71,13 @@
 
 ;; theme
 (load-theme 'tango-dark t)
-(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-12"))
-(set-frame-font "FiraCode Nerd Font Mono-12" nil t)
+(if (string= system-type "darwin")
+    (progn
+      (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-12"))
+      (set-frame-font "FiraCode Nerd Font Mono-12" nil t))
+  (progn
+    (add-to-list 'default-frame-alist '(font . "Fira Code-12"))
+    (set-frame-font "Fira Code-12" nil t)))
 
 ;; lsp-mode
 (setq lsp-keymap-prefix "C-c l")
