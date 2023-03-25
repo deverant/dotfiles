@@ -53,7 +53,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar my-packages
-  '(company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors)
+  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
@@ -78,6 +78,10 @@
   (progn
     (add-to-list 'default-frame-alist '(font . "Fira Code-12"))
     (set-frame-font "Fira Code-12" nil t)))
+
+;; ace-windows
+(global-set-key (kbd "M-o") 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
 ;; lsp-mode
 (setq lsp-keymap-prefix "C-c l")
