@@ -76,8 +76,8 @@
       (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font Mono-12"))
       (set-frame-font "FiraCode Nerd Font Mono-12" nil t))
   (progn
-    (add-to-list 'default-frame-alist '(font . "Fira Code-12"))
-    (set-frame-font "Fira Code-12" nil t)))
+    (add-to-list 'default-frame-alist '(font . "Fira Code-10"))
+    (set-frame-font "Fira Code-10" nil t)))
 
 ;; ace-windows
 (global-set-key (kbd "M-o") 'ace-window)
