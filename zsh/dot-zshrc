@@ -1,5 +1,7 @@
 # -*- mode: shell-script -*-
 
+export TIMEFMT=$'\n%J\ncpu\t%*U user %*S system %*E real %P cpu\nmem\t%MkB max %XkB shared %DkB unshared'
+
 # enable color support of ls
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
