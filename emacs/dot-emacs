@@ -53,7 +53,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar my-packages
-  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors)
+  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors magit)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
