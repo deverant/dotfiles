@@ -25,6 +25,7 @@
 (set-default-coding-systems 'utf-8)
 (setq-default indent-tabs-mode nil) ; never use tabs!
 (delete-selection-mode)
+(tool-bar-mode -1)
 
 (setq gc-cons-threshold (* 100 1024 1024) ; run GC every 100 megs
       read-process-output-max (* 1024 1024) ; 1mb
