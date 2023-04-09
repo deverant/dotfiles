@@ -1,6 +1,6 @@
 # -*- mode: shell-script -*-
 
-export TIMEFMT=$'\n%J\ncpu\t%*U user %*S system %*E real %P cpu\nmem\t%MkB max %XkB shared %DkB unshared'
+export TIMEFMT=$'\n%J\ncpu\t%*U user %*S system %*E real %P cpu\nmem\t%MkB max %XkB shared %DkB unshared\nctx\t%w voluntary / %c involuntary'
 
 # enable color support of ls
 if [ -x /usr/bin/dircolors ]; then
