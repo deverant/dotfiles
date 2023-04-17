@@ -7,9 +7,19 @@ fi
 export EDITOR="emacsclient -nw"
 
 e() {
-    emacsclient -nw "$@"
+    emacsclient -a "" -nw "$@"
 }
 
 ew() {
-    emacsclient -c -n "$@"
+    emacsclient -a "" -c -n "$@"
+}
+
+magit() {
+    local root="$(git rev-parse --show-toplevel 2>/dev/null)"
+    if [ "${root}" != "" ]; then
+        emacsclient -a "" -nw -e "(progn (magit-status \"${root}\") (delete-other-windows))"
+    else
+        echo "magit: no git repository found"
+        return 0;
+    fi
 }
