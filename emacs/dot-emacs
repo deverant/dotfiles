@@ -62,7 +62,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar my-packages
-  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors magit go-mode)
+  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors magit go-mode graphviz-dot-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
@@ -159,6 +159,21 @@
 ;; always use projectile
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; graphviz-dot-ode
+(require 'graphviz-dot-mode)
+(setq graphviz-dot-indent-width 4)
+(add-hook 'graphviz-dot-mode-hook 'company-mode)
+(setq graphviz-dot-preview-extension "svg")
+
+;; org-babel dot support
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)))
+
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (string= lang "dot")))  ;don't ask for dot
+(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
 ;; single window mode and double window mode
 (defun sw ()
