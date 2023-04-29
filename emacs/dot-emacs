@@ -88,6 +88,15 @@
     (add-to-list 'default-frame-alist '(font . "Fira Code-10"))
     (set-frame-font "Fira Code-10" nil t)))
 
+;; tabs or not?
+(defun infer-indentation-style ()
+  ;; if our source file uses tabs, we use tabs, if spaces spaces, and if
+  ;; neither, we use the current indent-tabs-mode
+  (let ((space-count (how-many "^  " (point-min) (point-max)))
+        (tab-count (how-many "^\t" (point-min) (point-max))))
+    (if (> space-count tab-count) (setq indent-tabs-mode nil))
+    (if (> tab-count space-count) (setq indent-tabs-mode t))))
+
 ;; ace-windows
 (global-set-key (kbd "M-o") 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
@@ -99,7 +108,7 @@
 (add-hook 'python-mode-hook (lambda ()
                               (require 'lsp-pyright)
                               (lsp-deferred)))
-(add-hook 'c-mode-hook 'lsp-deferred)
+(add-hook 'c-mode-hook 'lsp-deferred 'infer-indentation-style)
 (add-hook 'c++-mode-hook 'lsp-deferred)
 (add-hook 'objc-mode-hook 'lsp-deferred)
 (add-hook 'go-mode-hook 'lsp-deferred)
