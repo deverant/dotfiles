@@ -123,9 +123,10 @@
             "--header-insertion-decorators=1"))
 
 (setq lsp-file-watch-threshold 1000
+      lsp-log-io nil
       company-idle-delay 0.0
       company-minimum-prefix-length 1
-      lsp-idle-delay 0.1)
+      lsp-idle-delay 0.2)
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.venv\\'"))
 
