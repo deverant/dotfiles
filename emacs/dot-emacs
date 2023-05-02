@@ -30,8 +30,10 @@
   dir)
 
 (set-default-coding-systems 'utf-8)
-(setq-default indent-tabs-mode nil) ; never use tabs!
-(delete-selection-mode)
+;; I've started to like tabs in my C code, so let's see if I can live
+;; with this setting on and disabling it for specific modes where
+;; needed.
+(setq-default indent-tabs-mode t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
@@ -59,16 +61,16 @@
 (package-initialize)
 
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar my-packages
-  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors magit go-mode graphviz-dot-mode)
+  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors magit go-mode graphviz-dot-mode yasnippet yasnippet-snippets)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
   (cl-loop for p in my-packages
-           when (not (package-installed-p p)) do (cl-return nil)
-           finally (cl-return t)))
+	   when (not (package-installed-p p)) do (cl-return nil)
+	   finally (cl-return t)))
 
 (unless (my-packages-installed-p)
   ;; check for new packages (package versions)
@@ -88,39 +90,34 @@
     (add-to-list 'default-frame-alist '(font . "Fira Code-10"))
     (set-frame-font "Fira Code-10" nil t)))
 
-;; tabs or not?
-(defun infer-indentation-style ()
-  ;; if our source file uses tabs, we use tabs, if spaces spaces, and if
-  ;; neither, we use the current indent-tabs-mode
-  (let ((space-count (how-many "^  " (point-min) (point-max)))
-        (tab-count (how-many "^\t" (point-min) (point-max))))
-    (if (> space-count tab-count) (setq indent-tabs-mode nil))
-    (if (> tab-count space-count) (setq indent-tabs-mode t))))
-
 ;; ace-windows
 (global-set-key (kbd "M-o") 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 (setq aw-scope 'frame)
 
+;; c-style
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
 ;; lsp-mode
 (setq lsp-keymap-prefix "C-c l")
 (require 'lsp-mode)
 (add-hook 'python-mode-hook (lambda ()
-                              (require 'lsp-pyright)
-                              (lsp-deferred)))
-(add-hook 'c-mode-hook 'lsp-deferred 'infer-indentation-style)
+			      (require 'lsp-pyright)
+			      (lsp-deferred)))
+(add-hook 'c-mode-hook 'lsp-deferred)
 (add-hook 'c++-mode-hook 'lsp-deferred)
 (add-hook 'objc-mode-hook 'lsp-deferred)
 (add-hook 'go-mode-hook 'lsp-deferred)
 
 (setq lsp-clients-clangd-args
-          '("-j=2"
-            "--background-index"
-            "--clang-tidy"
-            "--completion-style=bundled"
-            "--pch-storage=memory"
-            "--header-insertion=iwyu"
-            "--header-insertion-decorators=1"))
+	  '("-j=2"
+	    "--background-index"
+	    "--clang-tidy"
+	    "--completion-style=bundled"
+	    "--pch-storage=memory"
+	    "--header-insertion=iwyu"
+	    "--header-insertion-decorators=1"))
 
 (setq lsp-file-watch-threshold 1000
       lsp-log-io nil
