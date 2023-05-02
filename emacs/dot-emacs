@@ -95,9 +95,11 @@
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 (setq aw-scope 'frame)
 
-;; c-style
-(setq c-default-style "linux"
-      c-basic-offset 4)
+;; code style
+(setq c-default-style "linux")
+(setq tab-width 8) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
 
 ;; lsp-mode
 (setq lsp-keymap-prefix "C-c l")
