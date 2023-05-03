@@ -37,6 +37,9 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
+;; don't accidentally kill windows
+(global-unset-key (kbd "s-w"))
+
 (setq gc-cons-threshold (* 100 1024 1024) ; run GC every 100 megs
       read-process-output-max (* 1024 1024) ; 1mb
       debug-on-error t ; stack trace on errors
