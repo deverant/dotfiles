@@ -187,6 +187,10 @@
   (not (string= lang "dot")))  ;don't ask for dot
 (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
+;; yasnippet
+(yas-reload-all)
+(add-hook 'c-mode-hook #'yas-minor-mode)
+
 ;; single window mode and double window mode
 (defun sw ()
   (interactive)
