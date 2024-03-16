@@ -13,3 +13,6 @@ Thumbs.db
 # Python
 .venv
 __pycache__
+
+# caches
+.cache
