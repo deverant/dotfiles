@@ -24,7 +24,8 @@ then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+compinit
 
 #set history size
 export HISTSIZE=10000
