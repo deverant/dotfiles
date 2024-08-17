@@ -66,8 +66,11 @@
 (add-to-list 'package-archives
 	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
+;; refresh the package listing in the background
+(package-refresh-contents t)
+
 (defvar my-packages
-  '(ace-window company projectile flycheck flx-ido editorconfig lsp-mode lsp-pyright yaml-mode multiple-cursors magit go-mode graphviz-dot-mode yasnippet yasnippet-snippets)
+  '(ace-window company projectile flycheck flx-ido editorconfig yaml-mode multiple-cursors magit go-mode graphviz-dot-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
@@ -93,44 +96,30 @@
     (add-to-list 'default-frame-alist '(font . "Fira Code-10"))
     (set-frame-font "Fira Code-10" nil t)))
 
+;; tree-sitter
+(setq treesit-language-source-alist
+   '((c "https://github.com/tree-sitter/tree-sitter-c" "v0.20.7")
+     (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.20.5")))
+
+(cl-loop for lang in treesit-language-source-alist
+	 when (not (treesit-language-available-p (car lang)))
+	 do (treesit-install-language-grammar (car lang)))
+
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
+
+;; eglot
+(require 'eglot)
+(add-hook 'c-ts-mode-hook 'eglot-ensure)
+(add-hook 'c++-ts-mode-hook 'eglot-ensure)
+(add-hook 'python-ts-mode-hook 'eglot-ensure)
+(add-hook 'go-ts-mode-hook 'eglot-ensure)
+
 ;; ace-windows
 (global-set-key (kbd "M-o") 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 (setq aw-scope 'frame)
-
-;; code style
-(setq c-default-style "linux")
-(setq tab-width 8) ; or any other preferred value
-(defvaralias 'c-basic-offset 'tab-width)
-(defvaralias 'cperl-indent-level 'tab-width)
-
-;; lsp-mode
-(setq lsp-keymap-prefix "C-c l")
-(require 'lsp-mode)
-(add-hook 'python-mode-hook (lambda ()
-			      (require 'lsp-pyright)
-			      (lsp-deferred)))
-(add-hook 'c-mode-hook 'lsp-deferred)
-(add-hook 'c++-mode-hook 'lsp-deferred)
-(add-hook 'objc-mode-hook 'lsp-deferred)
-(add-hook 'go-mode-hook 'lsp-deferred)
-
-(setq lsp-clients-clangd-args
-	  '("-j=2"
-	    "--background-index"
-	    "--clang-tidy"
-	    "--completion-style=bundled"
-	    "--pch-storage=memory"
-	    "--header-insertion=iwyu"
-	    "--header-insertion-decorators=1"))
-
-(setq lsp-file-watch-threshold 1000
-      lsp-log-io nil
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      lsp-idle-delay 0.2)
-(with-eval-after-load 'lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.venv\\'"))
 
 ;; multiple-cursors
 (require 'multiple-cursors)
@@ -186,22 +175,6 @@
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (string= lang "dot")))  ;don't ask for dot
 (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-
-;; yasnippet
-(yas-reload-all)
-(add-hook 'c-mode-hook #'yas-minor-mode)
-
-;; single window mode and double window mode
-(defun sw ()
-  (interactive)
-  (delete-other-windows)
-  (set-frame-size (selected-frame) 80 65))
-
-(defun dw ()
-  (interactive)
-  (delete-other-windows)
-  (set-frame-size (selected-frame) 167 65)
-  (split-window (selected-window) 85 t))
 
 ;; Clear whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
