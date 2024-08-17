@@ -70,7 +70,19 @@
 (package-refresh-contents t)
 
 (defvar my-packages
-  '(ace-window company projectile flycheck flx-ido editorconfig yaml-mode multiple-cursors magit go-mode graphviz-dot-mode)
+  '(ace-window
+    company
+    projectile
+    flycheck
+    flx-ido
+    editorconfig
+    yaml-mode
+    multiple-cursors
+    magit
+    go-mode
+    graphviz-dot-mode
+    treemacs
+    treemacs-projectile)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
