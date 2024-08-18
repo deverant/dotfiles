@@ -36,6 +36,8 @@
 (setq-default indent-tabs-mode t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(setq c-ts-mode-indent-style "linux")
+(setq c-ts-mode-indent-offset 8)
 
 ;; don't accidentally kill windows
 (global-unset-key (kbd "s-w"))
@@ -131,6 +133,9 @@
 (add-hook 'c++-ts-mode-hook 'eglot-ensure)
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
 (add-hook 'go-ts-mode-hook 'eglot-ensure)
+
+(global-set-key (kbd "C-c l f") 'eglot-format)
+(global-set-key (kbd "C-c l r") 'eglot-rename)
 
 ;; ace-windows
 (global-set-key (kbd "M-o") 'ace-window)
