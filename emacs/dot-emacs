@@ -30,6 +30,9 @@
   dir)
 
 (set-default-coding-systems 'utf-8)
+
+(add-to-list 'load-path (ensure-directory (concat user-emacs-directory "lisp")))
+
 ;; I've started to like tabs in my C code, so let's see if I can live
 ;; with this setting on and disabling it for specific modes where
 ;; needed.
@@ -210,6 +213,10 @@
 
 ;; Use xdg-open to open URLs
 (setq browse-url-browser-function 'browse-url-xdg-open)
+
+;; idomenu
+(autoload 'idomenu "idomenu" nil t)
+(global-set-key (kbd "C-c l i") 'idomenu)
 
 ;; Clear echo area
 (princ "" t)
