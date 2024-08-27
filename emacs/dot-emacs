@@ -139,6 +139,8 @@
 
 ;; eglot
 (require 'eglot)
+(setq eglot-autoshutdown t) ;; kill buffer after last buffer
+
 (add-hook 'c-ts-mode-hook 'eglot-ensure)
 (add-hook 'c++-ts-mode-hook 'eglot-ensure)
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
