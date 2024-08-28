@@ -38,6 +38,8 @@
       visible-bell t
       )
 
+(global-set-key (kbd "C-x m") 'man)
+
 ;; add unique part of buffer name to the beginning
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -70,20 +72,9 @@
 (package-refresh-contents t)
 
 (defvar my-packages
-  '(company
-    projectile
-    editorconfig
-    flycheck
-    flx-ido
-    yaml-mode
+  '(flx-ido
     multiple-cursors
-    magit
-    go-mode
-    graphviz-dot-mode
-    treemacs
-    treemacs-magit
-    treemacs-projectile
-    yaml-mode)
+    graphviz-dot-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()
@@ -113,7 +104,6 @@
 (setq treesit-language-source-alist
    '((c "https://github.com/tree-sitter/tree-sitter-c" "v0.20.7")
      (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.20.5")
-     (yaml "https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0")
      (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")))
 
 (cl-loop for lang in treesit-language-source-alist
@@ -123,7 +113,6 @@
 (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
 (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
-(add-to-list 'major-mode-remap-alist '(yaml-mode . yaml-ts-mode))
 
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-ts-mode))
 
@@ -139,23 +128,11 @@
 (global-set-key (kbd "C-c l f") 'eglot-format)
 (global-set-key (kbd "C-c l r") 'eglot-rename)
 
-;; ace-windows
-(use-package ace-window
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-  (setq aw-scope 'frame)
-  :bind
-  ("M-o" . ace-window))
-
 ;; multiple-cursors
 (require 'multiple-cursors)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;; editorconfig
-(require 'editorconfig)
-(editorconfig-mode 1)
 
 ;; enable flx-ido
 (require 'flx-ido)
@@ -177,16 +154,6 @@
   (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
 (add-hook 'ido-setup-hook 'ido-define-keys)
 
-;; always use flycheck
-(add-hook 'after-init-hook 'global-flycheck-mode)
-
-;; always use company mode
-(add-hook 'after-init-hook 'global-company-mode)
-
-;; always use projectile
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
 ;; graphviz-dot-ode
 (require 'graphviz-dot-mode)
 (setq graphviz-dot-indent-width 4)
@@ -202,23 +169,79 @@
   (not (string= lang "dot")))  ;don't ask for dot
 (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
-;; treemacs
-(global-set-key (kbd "M-0") 'treemacs-select-window)
-(global-set-key (kbd "C-x t t") 'treemacs)
-
 ;; Clear whitespace on save
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;; Use xdg-open to open URLs
 (setq browse-url-browser-function 'browse-url-xdg-open)
 
-;; remove stuff from mode line
-(use-package delight
-    :ensure t)
-
 ;; idomenu
 (autoload 'idomenu "idomenu" nil t)
 (global-set-key (kbd "C-c l i") 'idomenu)
+
+;; packages
+(use-package ace-window
+    :ensure t
+    :custom
+    (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+    (aw-scope 'frame)
+    :bind ("M-o" . ace-window))
+
+(use-package projectile
+    :ensure t
+    :pin melpa-stable
+    :init (projectile-mode +1)
+    :bind (:map projectile-mode-map ("C-c p" . projectile-command-map))
+    :delight '(:eval (concat " [" (projectile-project-name) "]")))
+
+(use-package company
+    :ensure t
+    :init (global-company-mode)
+    :delight)
+
+(use-package flycheck
+    :ensure t
+    :init (global-flycheck-mode))
+
+(use-package editorconfig
+    :ensure t
+    :config (editorconfig-mode 1))
+
+(use-package magit
+    :ensure t)
+
+(use-package delight
+    :ensure t)
+
+(use-package which-key
+    :ensure t
+    :delight
+    :custom (which-key-idle-delay 3)
+    :config (which-key-mode))
+
+(use-package yaml-mode
+    :ensure t)
+
+(use-package treemacs
+    :ensure t
+    :defer t
+    :config
+    (treemacs-project-follow-mode t)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    :bind
+    (:map global-map
+	  ("M-0" . treemacs-select-window)
+	  ("C-x t t" . treemacs))
+)
+
+(use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t)
+
+(use-package treemacs-magit
+    :after (treemacs magit)
+    :ensure t)
 
 ;; Clear echo area
 (princ "" t)
