@@ -11,12 +11,6 @@ fi
 export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin"
 
 if [[ "$(uname)" == "Darwin" ]]; then
-  # Local binaries
-  export PATH="$PATH:$HOME/Library/Python/3.11/bin"
-
-  # Added by Toolbox App
-  export PATH="$PATH:$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
-
   VSCODE_MACOS=$HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
   if [ -d "$VSCODE_MACOS" ]
   then
