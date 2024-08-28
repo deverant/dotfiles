@@ -1,27 +1,7 @@
 ;; -*- coding: utf-8; mode: lisp -*-
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(connection-local-criteria-alist
-   '(((:application eshell)
-      eshell-connection-default-profile)))
- '(connection-local-profile-alist
-   '((eshell-connection-default-profile
-      (eshell-path-env-list))))
- '(inhibit-startup-screen t)
- '(menu-bar-mode nil)
- '(package-selected-packages
-   '(multiple-cursors company projectile flycheck flx-ido editorconfig))
- '(warning-suppress-types '((comp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq custom-file (concat user-emacs-directory "customizations.el"))
+(load custom-file t)
 
 (defun ensure-directory (dir)
   (when (not (file-directory-p dir))
@@ -33,12 +13,13 @@
 
 (add-to-list 'load-path (ensure-directory (concat user-emacs-directory "lisp")))
 
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
 ;; I've started to like tabs in my C code, so let's see if I can live
 ;; with this setting on and disabling it for specific modes where
 ;; needed.
 (setq-default indent-tabs-mode t)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
 (setq c-ts-mode-indent-style "linux")
 (setq c-ts-mode-indent-offset 8)
 
@@ -57,6 +38,14 @@
       visible-bell t
       )
 
+;; add unique part of buffer name to the beginning
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
+;; don't hide the frame
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil)
   ;; don't accidentally kill windows
@@ -74,13 +63,14 @@
 
 (add-to-list 'package-archives
 	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives
+	     '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
 
 ;; refresh the package listing in the background
 (package-refresh-contents t)
 
 (defvar my-packages
-  '(ace-window
-    company
+  '(company
     projectile
     editorconfig
     flycheck
@@ -150,9 +140,12 @@
 (global-set-key (kbd "C-c l r") 'eglot-rename)
 
 ;; ace-windows
-(global-set-key (kbd "M-o") 'ace-window)
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-(setq aw-scope 'frame)
+(use-package ace-window
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (setq aw-scope 'frame)
+  :bind
+  ("M-o" . ace-window))
 
 ;; multiple-cursors
 (require 'multiple-cursors)
@@ -218,6 +211,10 @@
 
 ;; Use xdg-open to open URLs
 (setq browse-url-browser-function 'browse-url-xdg-open)
+
+;; remove stuff from mode line
+(use-package delight
+    :ensure t)
 
 ;; idomenu
 (autoload 'idomenu "idomenu" nil t)
