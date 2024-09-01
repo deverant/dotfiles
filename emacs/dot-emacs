@@ -127,6 +127,7 @@
 
 (global-set-key (kbd "C-c l f") 'eglot-format)
 (global-set-key (kbd "C-c l r") 'eglot-rename)
+(global-set-key (kbd "C-c l q") 'eglot-code-action-quickfix)
 
 ;; multiple-cursors
 (require 'multiple-cursors)
@@ -178,6 +179,9 @@
 ;; idomenu
 (autoload 'idomenu "idomenu" nil t)
 (global-set-key (kbd "C-c l i") 'idomenu)
+
+;; bats-mode
+(require 'bats-mode)
 
 ;; packages
 (use-package ace-window
