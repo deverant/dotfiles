@@ -68,11 +68,11 @@
   "Switch to a buffer-local tag from Imenu via Ido."
   (interactive)
   ;; ido initialization
-  (ido-init-completion-maps)
   (add-hook 'minibuffer-setup-hook 'ido-minibuffer-setup)
   (add-hook 'choose-completion-string-functions 'ido-choose-completion-string)
   (add-hook 'kill-emacs-hook 'ido-kill-emacs-hook)
   ;; set up ido completion list
+  (imenu-flush-cache)
   (let ((index-alist (cdr (imenu--make-index-alist))))
     (if (equal index-alist '(nil))
 	(message "No imenu tags in buffer")
