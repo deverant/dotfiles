@@ -5,6 +5,8 @@
 ;; Author: Georg Brandl <georg@python.org>
 ;; Version: 0.1
 ;;
+;; Slightly modified by Samuel Kohonen <samuel@deverant.com> in 2024
+;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
