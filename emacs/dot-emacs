@@ -233,6 +233,8 @@
     (treemacs-project-follow-mode t)
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
+    (treemacs-git-mode 'deferred)
+    (treemacs-hide-gitignored-files-mode t)
     :bind
     (:map global-map
 	  ("M-0" . treemacs-select-window)
