@@ -36,6 +36,8 @@
       line-number-mode t ; show line numbers
       column-number-mode t ; show column numbers
       visible-bell t
+      ; eldoc (we use eldoc-box for more info)
+      eldoc-echo-area-use-multiline-p nil
       )
 
 (global-set-key (kbd "C-x m") 'man)
@@ -257,6 +259,10 @@
       (funcall f proc (xterm-color-filter string)))
     (advice-add 'compilation-filter :around #'my/advice-compilation-filter)
     )
+
+(use-package eldoc-box
+    :bind ("C-c l h" . eldoc-box-help-at-point)
+    :ensure t)
 
 ;; Clear echo area
 (princ "" t)
