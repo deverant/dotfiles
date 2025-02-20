@@ -15,6 +15,7 @@
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(global-auto-revert-mode t)
 
 ;; I've started to like tabs in my C code, so let's see if I can live
 ;; with this setting on and disabling it for specific modes where
