@@ -37,6 +37,9 @@
       line-number-mode t ; show line numbers
       column-number-mode t ; show column numbers
       visible-bell t
+      ;; split buffer vertically if there is enough space
+      split-height-threshold nil
+      split-width-threshold 160
       ; eldoc (we use eldoc-box for more info)
       eldoc-echo-area-use-multiline-p nil
       )
@@ -51,6 +54,7 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 
+;; mac oddities
 (when (string= system-type "darwin")
   (setq dired-use-ls-dired nil)
   ;; don't accidentally kill windows
